@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 # vim: sw=2 ts=2
 
-require 'hmac-sha1'
+require 'openssl'
 require 'uri'
 require 'cgi'
 
@@ -27,15 +27,8 @@ module Qiniu
         end # calculate_deadline
 
         def calculate_hmac_sha1_digest(sk, str)
-          begin
-            sign = HMAC::SHA1.new(sk).update(str).digest
-          rescue RuntimeError => e
-            raise RuntimeError, "Please set Qiniu's access_key and secret_key before authorize any tokens."
-          rescue
-            raise
-          else
-            return sign
-          end
+          raise ArgumentError, "Please set Qiniu's access_key and secret_key before authorize any tokens." if sk.nil?
+          OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), sk, str)
         end
       end # class << self
 
@@ -171,7 +164,7 @@ module Qiniu
 
           ### URL变换：追加FOP指令
           if args[:fop].is_a?(String) && args[:fop] != '' then
-            if download_url.index('?').is_a?(Fixnum) then
+            if download_url.include?('?')
               # 已有参数
               download_url = "#{download_url}&#{args[:fop]}"
             else
@@ -184,7 +177,7 @@ module Qiniu
           e = Auth.calculate_deadline(args[:expires_in], args[:deadline])
 
           ### URL变换：追加授权期参数
-          if download_url.index('?').is_a?(Fixnum) then
+          if download_url.include?('?')
             # 已有参数
             download_url = "#{download_url}&e=#{e}"
           else

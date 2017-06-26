@@ -9,6 +9,7 @@
 * Ruby 2.1.x
 * Ruby 2.2.x
 * Ruby 2.3.x
+* Ruby 2.4.x
 * JRuby 9.x
 
 如果您的应用程序需要在 Ruby 1.9、2.0 或 JRuby 1.7 上运行，请使用此 Ruby SDK 的 6.6.0 版本。
@@ -24,7 +25,7 @@
 
 在您 Ruby 应用程序的 `Gemfile` 文件中，添加如下一行代码：
 
-    gem 'qiniu', '>= 6.8.0'
+    gem 'qiniu', '>= 6.9.0'
 
 然后，在应用程序所在的目录下，可以运行 `bundle` 安装依赖包：
 
