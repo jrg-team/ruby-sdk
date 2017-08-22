@@ -7,6 +7,7 @@ require 'zlib'
 require 'base64'
 require 'rest_client'
 require 'qiniu/exceptions'
+require 'rest-client'
 
 module Qiniu
     module Utils extend self

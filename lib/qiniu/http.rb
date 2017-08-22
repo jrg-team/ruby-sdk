@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 # vim: sw=2 ts=2
+require 'rest-client'
 
 module Qiniu
   module HTTP
